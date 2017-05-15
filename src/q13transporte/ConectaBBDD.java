@@ -10,6 +10,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -190,6 +194,29 @@ public class ConectaBBDD {
         tam = rs.getRow();
         rs.absolute(origen);
         return tam;
+    }
+    
+    public void cargarConductores() throws ExcepcionPersonal{
+        String sentSql;
+        ListaConductores lc = null;
+        try {
+            conecta();
+            crearSentencia();
+            sentSql = "SELECT `nombre`,`salario` FROM `Conductores`";
+            ejecutaSQL(sentSql);
+            //while (rs.next()) {  
+            rs.next();
+            System.out.println(rs.getString(1)+", "+rs.getFloat(2));
+            Conductor cond = new Conductor(rs.getString(1), rs.getFloat(2));
+            System.out.println(cond);
+                lc.insertar(cond);
+                
+            //}
+            cerrarConexion();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,ex.getMessage(), "Atención!",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }
