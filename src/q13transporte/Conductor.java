@@ -5,29 +5,46 @@
  */
 package q13transporte;
 
+import java.sql.Date;
+
 /**
  *
  * @author jaime
  */
 public class Conductor {
 //Atributos miembros (solo accesibles desde dentro de la clase)
-
+    private String codConductor;
     private String nombre;
     private float salario;
-//Constructor con todos los valores iniciales por defecto
+    private Date fecha_alta;
+
+//Constructores
 
     public Conductor() {
-        nombre = null;
-        salario = 0;
     }
-//Constructor con todos los valores recibidos como parámetros
 
     public Conductor(String nombre, float salario) {
         this.nombre = nombre;
         this.salario = salario;
     }
-//Métodos de encapsulamiento
 
+    public Conductor(String nombre, float salario, Date fecha_alta) {
+        this.nombre = nombre;
+        this.salario = salario;
+        this.fecha_alta = fecha_alta;
+    }
+
+    public Conductor(String codConductor, String nombre, float salario, Date fecha_alta) {
+        this.codConductor = codConductor;
+        this.nombre = nombre;
+        this.salario = salario;
+        this.fecha_alta = fecha_alta;
+    }
+    
+//Fin Constructores
+
+//Getter y Setter
+    
     public String getNombre() {
         return nombre;
     }
@@ -43,4 +60,15 @@ public class Conductor {
     public void setSalario(float salario) {
         this.salario = salario;
     }
+
+    public Date getFecha_alta() {
+        return fecha_alta;
+    }
+
+    public void setFecha_alta(Date fecha_alta) {
+        this.fecha_alta = fecha_alta;
+    }
+
+//Fin Getter y Setter
+    
 }
