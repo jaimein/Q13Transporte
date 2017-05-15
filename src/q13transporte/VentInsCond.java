@@ -102,28 +102,28 @@ public class VentInsCond extends javax.swing.JFrame {
 
         jLabel3.setText("salario");
 
-        jBult.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q12transporte/img/ult.png"))); // NOI18N
+        jBult.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q13transporte/img/ult.png"))); // NOI18N
         jBult.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBultActionPerformed(evt);
             }
         });
 
-        jBsiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q12transporte/img/sig.png"))); // NOI18N
+        jBsiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q13transporte/img/sig.png"))); // NOI18N
         jBsiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBsiguienteActionPerformed(evt);
             }
         });
 
-        jBprimero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q12transporte/img/pri.png"))); // NOI18N
+        jBprimero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q13transporte/img/pri.png"))); // NOI18N
         jBprimero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBprimeroActionPerformed(evt);
             }
         });
 
-        jBant.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q12transporte/img/ant.png"))); // NOI18N
+        jBant.setIcon(new javax.swing.ImageIcon(getClass().getResource("/q13transporte/img/ant.png"))); // NOI18N
         jBant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBantActionPerformed(evt);
