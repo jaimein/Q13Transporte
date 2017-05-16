@@ -23,7 +23,7 @@ public class ConectaBBDD {
 
     private Connection conn = null;
     private Statement sentenciaSQL = null;
-    private ResultSet rs = null;
+    ResultSet rs = null;
     boolean nuevoRegistro = false;
 
     /**
@@ -38,8 +38,8 @@ public class ConectaBBDD {
      * @throws SQLException
      */
     public void conecta() throws SQLException {
-        String jdbcUrl = null;
-        String driver = null;
+        String jdbcUrl;
+        String driver;
         try {
             //Registrando el Driver
             driver = "com.mysql.jdbc.Driver";
@@ -94,14 +94,14 @@ public class ConectaBBDD {
      * @return
      * @throws SQLException
      */
-    public int updateSQL(String sql) throws java.sql.SQLException {
+    public int updateSQL(String sql) throws java.sql.SQLException, ExcepcionPersonal {
         // actualiza la BBDD
         int upd = -1;
         try {
             upd = sentenciaSQL.executeUpdate(sql);
         } catch (SQLException e) {
-            System.out.print(e.getMessage());
             upd = -1;
+            throw new ExcepcionPersonal(e.getMessage());
         }
         return upd;
     }
@@ -196,27 +196,6 @@ public class ConectaBBDD {
         return tam;
     }
     
-    public void cargarConductores() throws ExcepcionPersonal{
-        String sentSql;
-        ListaConductores lc = null;
-        try {
-            conecta();
-            crearSentencia();
-            sentSql = "SELECT `nombre`,`salario` FROM `Conductores`";
-            ejecutaSQL(sentSql);
-            //while (rs.next()) {  
-            rs.next();
-            System.out.println(rs.getString(1)+", "+rs.getFloat(2));
-            Conductor cond = new Conductor(rs.getString(1), rs.getFloat(2));
-            System.out.println(cond);
-                lc.insertar(cond);
-                
-            //}
-            cerrarConexion();
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,ex.getMessage(), "Atención!",JOptionPane.ERROR_MESSAGE);
-        }
-    }
+    
 
 }

@@ -5,7 +5,9 @@
  */
 package q13transporte;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +25,7 @@ public class ListaAutobus {
      *
      * @param bus
      * @return
-     * @throws q13transporte.ExcepcionPersonal
+     * @throws q12transporte.ExcepcionPersonal
      */
     public boolean insertar(Autobus bus) throws ExcepcionPersonal {
         if ("".equals(bus.getId())) {
@@ -37,7 +39,7 @@ public class ListaAutobus {
      * nos devuelve el siguiente elemento
      *
      * @return
-     * @throws q13transporte.ExcepcionPersonal
+     * @throws q12transporte.ExcepcionPersonal
      */
     public Autobus siguiente() throws ExcepcionPersonal {
         hay();
@@ -49,7 +51,7 @@ public class ListaAutobus {
      * nos devuelve el anterior elemento
      *
      * @return
-     * @throws q13transporte.ExcepcionPersonal
+     * @throws q12transporte.ExcepcionPersonal
      */
     public Autobus anterior() throws ExcepcionPersonal {
         hay();
@@ -73,7 +75,7 @@ public class ListaAutobus {
      * nos devuele el ultimo
      *
      * @return
-     * @throws q13transporte.ExcepcionPersonal
+     * @throws q12transporte.ExcepcionPersonal
      */
     public Autobus ultimo() throws ExcepcionPersonal {
         hay();
@@ -85,7 +87,7 @@ public class ListaAutobus {
      * pregunta si el que se esta mostrando es el ultimo
      *
      * @return
-     * @throws q13transporte.ExcepcionPersonal
+     * @throws q12transporte.ExcepcionPersonal
      */
     public boolean isUltimo() throws ExcepcionPersonal {
         hay();
@@ -113,7 +115,7 @@ public class ListaAutobus {
     /**
      * elimina el que se ha visualizado
      *
-     * @throws q13transporte.ExcepcionPersonal
+     * @throws q12transporte.ExcepcionPersonal
      */
     public void borrar() throws ExcepcionPersonal {
         hay();
@@ -238,4 +240,6 @@ public class ListaAutobus {
         return devo;
 
     }
+    
+    
 }

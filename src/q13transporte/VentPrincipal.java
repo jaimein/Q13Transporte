@@ -23,6 +23,7 @@ public class VentPrincipal extends javax.swing.JFrame {
      */
     public VentPrincipal() {
         initComponents();
+        
 
     }
 

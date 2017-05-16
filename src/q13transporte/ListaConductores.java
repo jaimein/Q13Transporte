@@ -5,7 +5,9 @@
  */
 package q13transporte;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +19,10 @@ public class ListaConductores {
     private ArrayList<Conductor> listaConductores = new ArrayList<Conductor>();
     private int x = 0;
 
+    public ListaConductores() throws ExcepcionPersonal {
+        cargarConductores();
+    }
+
     /**
      * Metodo para añadir un conductor a la lista, previamente comprueba si
      * existe
@@ -26,12 +32,35 @@ public class ListaConductores {
      * @throws q13transporte.ExcepcionPersonal
      */
     public boolean insertar(Conductor cond) throws ExcepcionPersonal {
-
+        boolean boo = false;
         existe(cond);
         if ("".equals(cond.getNombre())) {
             throw new ExcepcionPersonal("El nombre no puede estar en blanco");
         }
-        return listaConductores.add(cond);
+        if ("".equals(cond.getCodConductor())) {
+            throw new ExcepcionPersonal("El codigo no puede estar en blanco");
+        }
+        if (cond.getCodConductor().length() > 4) {
+            throw new ExcepcionPersonal("El codigo no tener mas de 4 caracteres");
+        }
+        ConectaBBDD con = new ConectaBBDD();
+        String sentSql;
+
+        try {
+
+            con.conecta();
+            con.crearSentencia();
+            sentSql = "INSERT INTO Conductores (codConductor, nombre, salario, fecha_alta) VALUES ('" + cond.getCodConductor() + "', '" + cond.getNombre() + "', '" + cond.getSalario() + "', '" + cond.getFecha_alta() + "');";
+            System.out.println(sentSql);
+            con.updateSQL(sentSql);
+
+            con.cerrarConexion();
+            boo = true;
+        } catch (SQLException ex) {
+            throw new ExcepcionPersonal(ex.getMessage());
+        }
+        cargarConductores();
+        return boo;
     }
 
     /**
@@ -92,9 +121,10 @@ public class ListaConductores {
         hay();
         return listaConductores.size() - 1 == x;
     }
-    
+
     /**
      * pregunta si el que se esta mostrando es el primero
+     *
      * @return
      * @throws ExcepcionPersonal
      */
@@ -102,14 +132,11 @@ public class ListaConductores {
         hay();
         return 0 == x;
     }
-    
+
     public int pos() throws ExcepcionPersonal {
         hay();
         return x;
     }
-    
-    
-    
 
     /**
      * limpia la lista
@@ -138,8 +165,23 @@ public class ListaConductores {
             boolean borrado = false;
             do {
                 if (nombre.equalsIgnoreCase(listaConductores.get(i).getNombre())) {
-                    listaConductores.remove(i);
-                    borrado = true;
+                    ConectaBBDD con = new ConectaBBDD();
+                    String sentSql;
+
+                    try {
+
+                        con.conecta();
+                        con.crearSentencia();
+                        sentSql = "DELETE FROM `Conductores` WHERE `nombre` = '"+nombre+"' ";
+                        System.out.println(sentSql);
+                        con.updateSQL(sentSql);
+
+                        con.cerrarConexion();
+                        borrado = true;
+                    } catch (SQLException ex) {
+                        throw new ExcepcionPersonal(ex.getMessage());
+                    }
+
                 }
                 i++;
             } while ((i < listaConductores.size()) && (!borrado));
@@ -147,6 +189,7 @@ public class ListaConductores {
                 throw new ExcepcionPersonal("No se ha encotrodo el conductor para borrarlo");
             }
         }
+        cargarConductores();
 
     }
 
@@ -172,6 +215,9 @@ public class ListaConductores {
             int i = 0;
             do {
                 if (cond.getNombre().equalsIgnoreCase(listaConductores.get(i).getNombre())) {
+                    throw new ExcepcionPersonal("El conductor ya existe");
+                }
+                if (cond.getCodConductor().equalsIgnoreCase(listaConductores.get(i).getCodConductor())) {
                     throw new ExcepcionPersonal("El conductor ya existe");
                 }
                 i++;
@@ -221,6 +267,34 @@ public class ListaConductores {
         boolean boovar = false;
         Conductor devo = listaConductores.get(id);
         return devo;
+    }
+
+    public void cargarConductores() throws ExcepcionPersonal {
+        ConectaBBDD con = new ConectaBBDD();
+        String sentSql;
+
+        try {
+
+            con.conecta();
+            con.crearSentencia();
+            sentSql = "SELECT * FROM `Conductores`";
+            con.ejecutaSQL(sentSql);
+            while (con.rs.next()) {
+                System.out.println(con.rs.getString(1) + ", " + con.rs.getString(2));
+                Conductor cond = new Conductor(con.rs.getString(1), con.rs.getString(2), con.rs.getFloat(3), con.rs.getDate(4));
+                System.out.println(listaConductores.add(cond));
+            }
+            con.cerrarConexion();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atención!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public boolean modificar(Conductor condviejo, Conductor condnuevo){
+        boolean boo = false;
+        
+        return boo;
     }
 
 }

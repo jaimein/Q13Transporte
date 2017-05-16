@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class BuscaMuestra extends javax.swing.JFrame {
 
-    private ListaConductores Chofers = new ListaConductores();
+    private ListaConductores Chofers;
     String Accion;
     private ListaAutobus Buses = new ListaAutobus();
 
@@ -23,14 +23,16 @@ public class BuscaMuestra extends javax.swing.JFrame {
      * @param conduc
      * @param accion
      */
-    public BuscaMuestra(ListaConductores conduc, String accion) {
+    public BuscaMuestra(ListaConductores conduc, String accion) throws ExcepcionPersonal {
+        this.Chofers = new ListaConductores();
         initComponents();
         this.Chofers = conduc;
         this.Accion = accion;
         jPbus.setVisible(false);
     }
 
-    BuscaMuestra(ListaAutobus Buses, ListaConductores Chofers, String Accion) {
+    BuscaMuestra(ListaAutobus Buses, ListaConductores Chofers, String Accion) throws ExcepcionPersonal {
+        this.Chofers = new ListaConductores();
         initComponents();
         this.Chofers = Chofers;
         this.Accion = Accion;

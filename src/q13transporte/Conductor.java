@@ -6,6 +6,7 @@
 package q13transporte;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -24,11 +25,14 @@ public class Conductor {
     }
 
     public Conductor(String nombre, float salario) {
+        this.codConductor = null;
         this.nombre = nombre;
         this.salario = salario;
+        this.fecha_alta = Date.valueOf(LocalDate.now());
     }
 
     public Conductor(String nombre, float salario, Date fecha_alta) {
+        this.codConductor = null;
         this.nombre = nombre;
         this.salario = salario;
         this.fecha_alta = fecha_alta;
@@ -69,6 +73,13 @@ public class Conductor {
         this.fecha_alta = fecha_alta;
     }
 
-//Fin Getter y Setter
+    public String getCodConductor() {
+        return codConductor;
+    }
+
+    public void setCodConductor(String codConductor) {
+        this.codConductor = codConductor;
+    }
     
+//Fin Getter y Setter
 }

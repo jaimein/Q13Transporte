@@ -5,6 +5,8 @@
  */
 package q13transporte;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,15 +19,17 @@ public class Q13Transporte {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        try {
-            // TODO code application logic here
-            ConectaBBDD cc;
-            cc = new ConectaBBDD();
-            cc.cargarConductores();
-        } catch (ExcepcionPersonal ex) {
-            Logger.getLogger(Q13Transporte.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void main(String[] args) throws ExcepcionPersonal {
+        System.out.println("asdfgk");
+        ListaConductores Chofers = new ListaConductores();
+        Date fecha = Date.valueOf(LocalDate.now());
+    Conductor cond = new Conductor("15dd","pepaee", 1234,fecha);
+        Chofers.insertar(cond);
+        Chofers.borrarPorNombre("pepe");
+
+            
+            System.out.println("ok");
+        
     }
     
 }
