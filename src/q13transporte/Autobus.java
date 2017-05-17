@@ -11,21 +11,21 @@ package q13transporte;
  */
 abstract class Autobus {
 //Atributos miembros (solo accesibles desde dentro de la clase)
-
-    protected int id;
+    
+    protected String id;
     protected Conductor conductor;
     protected float precioBaseViaje;
     private Matricula matricula;
 //Constructor con todos los valores iniciales por defecto
 
     public Autobus() {
-        id = 0;
+        id = "0";
         conductor = null;
         precioBaseViaje = 0;
     }
 //Constructor con todos los valores recibidos como parámetros
 
-    public Autobus(int id, Conductor conductor, float precioBaseViaje, Matricula matricula) {
+    public Autobus(String id, Conductor conductor, float precioBaseViaje, Matricula matricula) {
         this.id = id;
         this.conductor = conductor;
         this.precioBaseViaje = precioBaseViaje;
@@ -33,11 +33,11 @@ abstract class Autobus {
     }
 //Métodos de encapsulamiento
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -16,7 +16,7 @@ public class AutobusInterurbano extends Autobus {
     private int km;
 //Constructor clase derivada
 
-    AutobusInterurbano(int id, Conductor conductor, float precioBaseViaje, Matricula matricula, int km) {
+    AutobusInterurbano(String id, Conductor conductor, float precioBaseViaje, Matricula matricula, int km) {
         super(id, conductor, precioBaseViaje, matricula); //Llamada constructor clase base
         this.km = km;
     }

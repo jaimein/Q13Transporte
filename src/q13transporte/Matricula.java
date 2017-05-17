@@ -53,5 +53,9 @@ public class Matricula {
         this.numero = numero;
     }
     
+    public String MatriculaToString(){
+        return letras+numero;
+    }
+    
     
 }

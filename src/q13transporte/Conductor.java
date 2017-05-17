@@ -44,6 +44,13 @@ public class Conductor {
         this.salario = salario;
         this.fecha_alta = fecha_alta;
     }
+
+    public Conductor(String codConductor, String nombre, float salario) {
+        this.codConductor = codConductor;
+        this.nombre = nombre;
+        this.salario = salario;
+        this.fecha_alta = Date.valueOf(LocalDate.now());
+    }
     
 //Fin Constructores
 

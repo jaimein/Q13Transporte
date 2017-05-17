@@ -16,7 +16,7 @@ public class AutobusUrbano extends Autobus {
     private String ruta;
 //Constructor clase derivada
 
-    AutobusUrbano(int id, Conductor conductor, float precioBaseViaje, Matricula matricula, String ruta) {
+    AutobusUrbano(String id, Conductor conductor, float precioBaseViaje, Matricula matricula, String ruta) {
         super(id, conductor, precioBaseViaje, matricula); //Llamada constructor clase base
         this.ruta = ruta;
     }

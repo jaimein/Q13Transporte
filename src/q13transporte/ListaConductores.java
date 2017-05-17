@@ -7,6 +7,8 @@ package q13transporte;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +21,7 @@ public class ListaConductores {
     private ArrayList<Conductor> listaConductores = new ArrayList<Conductor>();
     private int x = 0;
 
-    public ListaConductores() throws ExcepcionPersonal {
+    public ListaConductores() throws ExcepcionPersonal, SQLException {
         cargarConductores();
     }
 
@@ -31,7 +33,7 @@ public class ListaConductores {
      * @return
      * @throws q13transporte.ExcepcionPersonal
      */
-    public boolean insertar(Conductor cond) throws ExcepcionPersonal {
+    public boolean insertar(Conductor cond) throws ExcepcionPersonal, SQLException {
         boolean boo = false;
         existe(cond);
         if ("".equals(cond.getNombre())) {
@@ -158,7 +160,7 @@ public class ListaConductores {
         listaConductores.remove(x);
     }
 
-    public void borrarPorNombre(String nombre) throws ExcepcionPersonal {
+    public void borrarPorNombre(String nombre) throws ExcepcionPersonal, SQLException {
         hay();
         if (!(listaConductores.isEmpty())) {
             int i = 0;
@@ -261,40 +263,73 @@ public class ListaConductores {
         return devo;
     }
 
-    public Conductor devConductorId(int id) throws ExcepcionPersonal {
+    public Conductor devConductorId(String id) throws ExcepcionPersonal {
         hay();
         int i = 0;
         boolean boovar = false;
-        Conductor devo = listaConductores.get(id);
+        Conductor devo = null;
+        if (!(listaConductores.isEmpty())) {
+            do {
+                if (id.equalsIgnoreCase(listaConductores.get(i).getCodConductor())) {
+                    boovar = true;
+                    devo = listaConductores.get(i);
+                }
+                i++;
+            } while ((i < listaConductores.size()) && (boovar == false));
+            if (!boovar) {
+                throw new ExcepcionPersonal("No existe ese conductor");
+            }
+        } else {
+            throw new ExcepcionPersonal("No hay conductores");
+        }
         return devo;
     }
 
-    public void cargarConductores() throws ExcepcionPersonal {
+    public void cargarConductores() throws ExcepcionPersonal, SQLException {
         ConectaBBDD con = new ConectaBBDD();
         String sentSql;
-
-        try {
+            listaConductores.clear();
+       
 
             con.conecta();
             con.crearSentencia();
             sentSql = "SELECT * FROM `Conductores`";
             con.ejecutaSQL(sentSql);
             while (con.rs.next()) {
-                System.out.println(con.rs.getString(1) + ", " + con.rs.getString(2));
+                //System.out.println(con.rs.getString(1) + ", " + con.rs.getString(2));
                 Conductor cond = new Conductor(con.rs.getString(1), con.rs.getString(2), con.rs.getFloat(3), con.rs.getDate(4));
-                System.out.println(listaConductores.add(cond));
+                listaConductores.add(cond);
             }
             con.cerrarConexion();
 
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atención!", JOptionPane.ERROR_MESSAGE);
-        }
+        
     }
     
-    public boolean modificar(Conductor condviejo, Conductor condnuevo){
-        boolean boo = false;
+    public void modificar(Conductor cond) throws ExcepcionPersonal, SQLException{
+        hay();
+        ConectaBBDD con = new ConectaBBDD();
+        String sentSql;
+        if (!(listaConductores.isEmpty())) {
+            
+
+                    try {
+
+                        con.conecta();
+                        con.crearSentencia();
+                        sentSql = "UPDATE `Conductores` SET `nombre`='"+cond.getNombre()+"',`salario`='"+cond.getSalario()+"',`fecha_alta`="+cond.getFecha_alta()+" WHERE `codConductor`='"+cond.getCodConductor()+"'";
+                        System.out.println(sentSql);
+                        con.updateSQL(sentSql);
+
+                        con.cerrarConexion();
+                        
+                    } catch (SQLException ex) {
+                        throw new ExcepcionPersonal(ex.getMessage());
+                    }
+
+                
+        }
+        cargarConductores();
         
-        return boo;
     }
 
 }
