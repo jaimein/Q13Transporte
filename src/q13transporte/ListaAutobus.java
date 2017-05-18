@@ -296,7 +296,7 @@ public class ListaAutobus {
 
     }
 
-    public void cargarAutobuses() throws SQLException, ExcepcionPersonal {
+    private void cargarAutobuses() throws SQLException, ExcepcionPersonal {
         ListaConductores lc;
         lc = new ListaConductores();
         ConectaBBDD con = new ConectaBBDD();

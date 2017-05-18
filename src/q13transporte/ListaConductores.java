@@ -285,7 +285,7 @@ public class ListaConductores {
         return devo;
     }
 
-    public void cargarConductores() throws ExcepcionPersonal, SQLException {
+    private void cargarConductores() throws ExcepcionPersonal, SQLException {
         ConectaBBDD con = new ConectaBBDD();
         String sentSql;
             listaConductores.clear();
