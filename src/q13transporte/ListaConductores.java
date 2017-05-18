@@ -148,6 +148,7 @@ public class ListaConductores {
     public void limpiar() throws ExcepcionPersonal {
         hay();
         listaConductores.clear();
+        x=0;
     }
 
     /**
@@ -174,7 +175,7 @@ public class ListaConductores {
 
                         con.conecta();
                         con.crearSentencia();
-                        sentSql = "DELETE FROM `Conductores` WHERE `nombre` = '"+nombre+"' ";
+                        sentSql = "DELETE FROM `Conductores` WHERE `nombre` = '" + nombre + "' ";
                         System.out.println(sentSql);
                         con.updateSQL(sentSql);
 
@@ -288,48 +289,45 @@ public class ListaConductores {
     private void cargarConductores() throws ExcepcionPersonal, SQLException {
         ConectaBBDD con = new ConectaBBDD();
         String sentSql;
-            listaConductores.clear();
-       
+        listaConductores.clear();
+        x = 0;
 
-            con.conecta();
-            con.crearSentencia();
-            sentSql = "SELECT * FROM `Conductores`";
-            con.ejecutaSQL(sentSql);
-            while (con.rs.next()) {
-                //System.out.println(con.rs.getString(1) + ", " + con.rs.getString(2));
-                Conductor cond = new Conductor(con.rs.getString(1), con.rs.getString(2), con.rs.getFloat(3), con.rs.getDate(4));
-                listaConductores.add(cond);
-            }
-            con.cerrarConexion();
+        con.conecta();
+        con.crearSentencia();
+        sentSql = "SELECT * FROM `Conductores`";
+        con.ejecutaSQL(sentSql);
+        while (con.rs.next()) {
+            //System.out.println(con.rs.getString(1) + ", " + con.rs.getString(2));
+            Conductor cond = new Conductor(con.rs.getString(1), con.rs.getString(2), con.rs.getFloat(3), con.rs.getDate(4));
+            listaConductores.add(cond);
+        }
+        con.cerrarConexion();
 
-        
     }
-    
-    public void modificar(Conductor cond) throws ExcepcionPersonal, SQLException{
+
+    public void modificar(Conductor cond) throws ExcepcionPersonal, SQLException {
         hay();
         ConectaBBDD con = new ConectaBBDD();
         String sentSql;
         if (!(listaConductores.isEmpty())) {
-            
 
-                    try {
+            try {
 
-                        con.conecta();
-                        con.crearSentencia();
-                        sentSql = "UPDATE `Conductores` SET `nombre`='"+cond.getNombre()+"',`salario`='"+cond.getSalario()+"',`fecha_alta`="+cond.getFecha_alta()+" WHERE `codConductor`='"+cond.getCodConductor()+"'";
-                        System.out.println(sentSql);
-                        con.updateSQL(sentSql);
+                con.conecta();
+                con.crearSentencia();
+                sentSql = "UPDATE `Conductores` SET `nombre`='" + cond.getNombre() + "',`salario`='" + cond.getSalario() + "',`fecha_alta`=" + cond.getFecha_alta() + " WHERE `codConductor`='" + cond.getCodConductor() + "'";
+                System.out.println(sentSql);
+                con.updateSQL(sentSql);
 
-                        con.cerrarConexion();
-                        
-                    } catch (SQLException ex) {
-                        throw new ExcepcionPersonal(ex.getMessage());
-                    }
+                con.cerrarConexion();
 
-                
+            } catch (SQLException ex) {
+                throw new ExcepcionPersonal(ex.getMessage());
+            }
+
         }
         cargarConductores();
-        
+
     }
 
 }

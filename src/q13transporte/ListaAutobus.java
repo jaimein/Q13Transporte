@@ -137,11 +137,13 @@ public class ListaAutobus {
 
     /**
      * limpia la lista
+     *
      * @throws q13transporte.ExcepcionPersonal
      */
     public void limpiar() throws ExcepcionPersonal {
         hay();
         listaBuses.clear();
+        x=0;
     }
 
     /**
@@ -156,6 +158,7 @@ public class ListaAutobus {
 
     /**
      * elimina un autobus por su id
+     *
      * @param id
      * @throws ExcepcionPersonal
      */
@@ -172,13 +175,13 @@ public class ListaAutobus {
                 try {
                     con.conecta();
                     con.crearSentencia();
-                    sentSql = "DELETE FROM `Autobuses` WHERE numIdent = '"+listaBuses.get(i).getId()+"'";
+                    sentSql = "DELETE FROM `Autobuses` WHERE numIdent = '" + listaBuses.get(i).getId() + "'";
                     System.out.println(sentSql);
                     con.updateSQL(sentSql);
 
                     con.cerrarConexion();
                     boo = true;
-                    
+
                 } catch (SQLException ex) {
                     throw new ExcepcionPersonal(ex.getMessage());
                 }
@@ -302,6 +305,7 @@ public class ListaAutobus {
         ConectaBBDD con = new ConectaBBDD();
         String sentSql;
         listaBuses.clear();
+        x = 0;
         try {
 
             con.conecta();
@@ -328,10 +332,9 @@ public class ListaAutobus {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Atención!", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
-    public void modificar(Autobus bus) throws ExcepcionPersonal{
-        
+
+    public void modificar(Autobus bus) throws ExcepcionPersonal {
+
         boolean boo = false;
         ConectaBBDD con = new ConectaBBDD();
         String sentSql = null;
@@ -341,10 +344,10 @@ public class ListaAutobus {
             con.conecta();
             con.crearSentencia();
             if (bus instanceof AutobusUrbano) {
-                sentSql = "UPDATE `Autobuses` SET `codConductor`="+bus.getConductor().getCodConductor()+",`precioBase`="+bus.getPrecioBaseViaje()+",`matricula`="+bus.getMatricula().MatriculaToString()+",`tipo`=1,`ruta`="+((AutobusUrbano) bus).getRuta()+",`km`=0 WHERE numIdent='"+bus.getId()+"'";
+                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`=" + bus.getMatricula().MatriculaToString() + ",`tipo`=1,`ruta`=" + ((AutobusUrbano) bus).getRuta() + ",`km`=0 WHERE numIdent='" + bus.getId() + "'";
             }
             if (bus instanceof AutobusInterurbano) {
-                sentSql = "UPDATE `Autobuses` SET `codConductor`="+bus.getConductor().getCodConductor()+",`precioBase`="+bus.getPrecioBaseViaje()+",`matricula`='"+bus.getMatricula().MatriculaToString()+"',`tipo`=1,`km`="+((AutobusInterurbano) bus).getKm()+" WHERE numIdent='"+bus.getId()+"'";
+                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`='" + bus.getMatricula().MatriculaToString() + "',`tipo`=1,`km`=" + ((AutobusInterurbano) bus).getKm() + " WHERE numIdent='" + bus.getId() + "'";
             }
             System.out.println(sentSql);
             con.updateSQL(sentSql);
@@ -356,13 +359,7 @@ public class ListaAutobus {
             throw new ExcepcionPersonal(ex.getMessage());
         }
 //        cargarConductores();
-        
-        
-        
-        
-        
+
     }
-    
-    
-    
+
 }
