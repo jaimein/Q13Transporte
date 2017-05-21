@@ -239,7 +239,7 @@ public class BuscaMuestra extends javax.swing.JFrame {
                 if (jTidBus.getText().equalsIgnoreCase("")) {
                     throw new ExcepcionPersonal("El id no puede estar en blanco");
                 }
-                VentInsBus vent = new VentInsBus(Buses, Chofers, Accion, Integer.parseInt(jTidBus.getText()));
+                VentInsBus vent = new VentInsBus(Buses, Chofers, Accion, jTidBus.getText());
                 vent.setVisible(true);
                 this.dispose();
             } catch (ExcepcionPersonal ex) {

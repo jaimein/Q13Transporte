@@ -268,7 +268,7 @@ public class ListaAutobus {
         hay();
         int i = 0;
         if (listaBuses.isEmpty()) {
-            throw new ExcepcionPersonal("No hay conductores");
+            throw new ExcepcionPersonal("No hay buses");
         } else {
             do {
                 if (num_ident.equalsIgnoreCase(listaBuses.get(i).getId())) {
@@ -278,7 +278,7 @@ public class ListaAutobus {
                 i++;
             } while ((i < listaBuses.size()) && (boovar == false));
             if (!boovar) {
-                throw new ExcepcionPersonal("No existe ese conductor");
+                throw new ExcepcionPersonal("No existe ese bus");
             }
         }
 

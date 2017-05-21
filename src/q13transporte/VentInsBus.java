@@ -97,7 +97,7 @@ public class VentInsBus extends javax.swing.JFrame {
 
     }
 
-    VentInsBus(ListaAutobus Buses, ListaConductores Chofers, String Accion, int id) throws ExcepcionPersonal {
+    VentInsBus(ListaAutobus Buses, ListaConductores Chofers, String Accion, String id) throws ExcepcionPersonal{
         try {
             this.Chofers = new ListaConductores();
             this.Buses = new ListaAutobus();
@@ -133,8 +133,9 @@ public class VentInsBus extends javax.swing.JFrame {
                 if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("C")) {
                     jCruta.setSelectedIndex(2);
                 }
-                jCruta.setEditable(false);
+                
             }
+            jCruta.setEditable(false);
             jTmatLetras.setText(bus.getMatricula().getLetras());
             jTmatNum.setText(String.valueOf(bus.getMatricula().getNumero()));
             jTId.setEditable(false);
@@ -143,13 +144,10 @@ public class VentInsBus extends javax.swing.JFrame {
             jTmatLetras.setEditable(false);
             jTmatNum.setEditable(false);
             jBguardar.setText("Atras");
-        } catch (SQLException | ExcepcionPersonal ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
-            
-        }
+            this.dispose();
+        } 
     }
 
     /**
@@ -237,10 +235,9 @@ public class VentInsBus extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTId)
-                        .addComponent(jClistaConductores, 0, 92, Short.MAX_VALUE))
-                    .addComponent(jTprecioViaje, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTprecioViaje, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTId, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jClistaConductores, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -508,29 +505,29 @@ public class VentInsBus extends javax.swing.JFrame {
         if (Accion.equalsIgnoreCase("BuscaMuestra")) {
             this.dispose();
         } else {
-            int id;
+            String id;
             Conductor cond;
             float precio;
             Matricula matri;
             long numMa;
             String letMa;
             try {
-                id = Integer.parseInt(jTId.getText());
-                cond = Chofers.devConductorId(String.valueOf(jClistaConductores.getSelectedIndex() - 1));
+                id = jTId.getText();
+                cond = Chofers.devConductorId(String.valueOf(jClistaConductores.getSelectedIndex()));
                 precio = Float.parseFloat(jTprecioViaje.getText());
-                letMa = jTmatLetras.getText();
+                letMa = jTmatLetras.getText().toUpperCase();
                 numMa = Long.parseLong(jTmatNum.getText());
                 matri = new Matricula(letMa, numMa);
 
                 if (jRurbano.isSelected()) {
                     // System.out.println(jCruta.geti);
                     // String ruta = jCruta.getItemAt(jCruta.getItemCount());
-                    AutobusUrbano bus = new AutobusUrbano(String.valueOf(id), cond, precio, matri, jCruta.getItemAt(jCruta.getSelectedIndex()));
+                    AutobusUrbano bus = new AutobusUrbano(id, cond, precio, matri, jCruta.getItemAt(jCruta.getSelectedIndex()));
                     Buses.insertar(bus);
                     JOptionPane.showMessageDialog(null, "Autobus introducido", "Valido", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 } else {
-                    AutobusInterurbano bus = new AutobusInterurbano(String.valueOf(id), cond, precio, matri, Integer.parseInt(jTkm.getText()));
+                    AutobusInterurbano bus = new AutobusInterurbano(id, cond, precio, matri, Integer.parseInt(jTkm.getText()));
                     Buses.insertar(bus);
                     JOptionPane.showMessageDialog(null, "Autobus introducido", "Valido", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
@@ -552,6 +549,7 @@ public class VentInsBus extends javax.swing.JFrame {
             jCruta.setEnabled(false);
             jLruta.setEnabled(false);
             jTkm.setEnabled(true);
+            jTkm.setEditable(true);
             jLkm.setEnabled(true);
         } else {
             jCruta.setEnabled(true);

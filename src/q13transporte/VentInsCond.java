@@ -6,8 +6,6 @@
 package q13transporte;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,15 +43,15 @@ public class VentInsCond extends javax.swing.JFrame {
                 jTsalario.setEditable(false);
                 jBant.setEnabled(false);
                 jBprimero.setEnabled(false);
-                jTpos.setText(String.valueOf(Chofers.pos()+1));
+                jTpos.setText(String.valueOf(Chofers.pos() + 1));
                 jTpos.setEditable(false);
             }
         } catch (SQLException | ExcepcionPersonal ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
-            
+
         }
     }
 
@@ -81,12 +79,9 @@ public class VentInsCond extends javax.swing.JFrame {
                 jTsalario.setEditable(false);
                 jBguardar.setText("Atras");
             }
-        } catch (SQLException | ExcepcionPersonal ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
-            
+
         }
     }
 
@@ -103,6 +98,7 @@ public class VentInsCond extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jTcodigo = new javax.swing.JTextField();
         jTnombre = new javax.swing.JTextField();
         jTsalario = new javax.swing.JTextField();
         jPbotonesNav = new javax.swing.JPanel();
@@ -114,6 +110,7 @@ public class VentInsCond extends javax.swing.JFrame {
         jBatras = new javax.swing.JButton();
         jPboton = new javax.swing.JPanel();
         jBguardar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -223,42 +220,54 @@ public class VentInsCond extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
+        jLabel4.setText("codigo");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jTnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTsalario, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPboton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPbotonesNav, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jTnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTsalario, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(41, 41, 41)
+                .addGap(49, 49, 49)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTsalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66)
+                .addGap(18, 18, 18)
                 .addComponent(jPboton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPbotonesNav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,11 +278,11 @@ public class VentInsCond extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -285,7 +294,7 @@ public class VentInsCond extends javax.swing.JFrame {
             this.dispose();
         } else {
             try {
-                Chofers.insertar(new Conductor(jTnombre.getText(), Float.parseFloat(jTsalario.getText())));
+                Chofers.insertar(new Conductor(jTcodigo.getText(),jTnombre.getText(), Float.parseFloat(jTsalario.getText())));
                 JOptionPane.showMessageDialog(null, "Conductor introducido", "Valido", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } catch (ExcepcionPersonal e) {
@@ -304,7 +313,7 @@ public class VentInsCond extends javax.swing.JFrame {
             mostCond = Chofers.siguiente();
             jTnombre.setText(mostCond.getNombre());
             jTsalario.setText(String.valueOf(mostCond.getSalario()));
-            jTpos.setText(String.valueOf(Chofers.pos()+1));
+            jTpos.setText(String.valueOf(Chofers.pos() + 1));
             if (Chofers.isPrimer()) {
                 jBant.setEnabled(false);
                 jBprimero.setEnabled(false);
@@ -319,8 +328,7 @@ public class VentInsCond extends javax.swing.JFrame {
                 jBsiguiente.setEnabled(true);
                 jBult.setEnabled(true);
             }
-            
-            
+
         } catch (ExcepcionPersonal ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -333,7 +341,7 @@ public class VentInsCond extends javax.swing.JFrame {
             mostCond = Chofers.anterior();
             jTnombre.setText(mostCond.getNombre());
             jTsalario.setText(String.valueOf(mostCond.getSalario()));
-            jTpos.setText(String.valueOf(Chofers.pos()+1));
+            jTpos.setText(String.valueOf(Chofers.pos() + 1));
             if (Chofers.isPrimer()) {
                 jBant.setEnabled(false);
                 jBprimero.setEnabled(false);
@@ -360,7 +368,7 @@ public class VentInsCond extends javax.swing.JFrame {
             mostCond = Chofers.ultimo();
             jTnombre.setText(mostCond.getNombre());
             jTsalario.setText(String.valueOf(mostCond.getSalario()));
-            jTpos.setText(String.valueOf(Chofers.pos()+1));
+            jTpos.setText(String.valueOf(Chofers.pos() + 1));
             if (Chofers.isPrimer()) {
                 jBant.setEnabled(false);
                 jBprimero.setEnabled(false);
@@ -387,7 +395,7 @@ public class VentInsCond extends javax.swing.JFrame {
             mostCond = Chofers.primer();
             jTnombre.setText(mostCond.getNombre());
             jTsalario.setText(String.valueOf(mostCond.getSalario()));
-            jTpos.setText(String.valueOf(Chofers.pos()+1));
+            jTpos.setText(String.valueOf(Chofers.pos() + 1));
             if (Chofers.isPrimer()) {
                 jBant.setEnabled(false);
                 jBprimero.setEnabled(false);
@@ -423,9 +431,11 @@ public class VentInsCond extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPboton;
     private javax.swing.JPanel jPbotonesNav;
+    private javax.swing.JTextField jTcodigo;
     private javax.swing.JTextField jTnombre;
     private javax.swing.JTextField jTpos;
     private javax.swing.JTextField jTsalario;
