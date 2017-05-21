@@ -34,6 +34,7 @@ public class VentPrincipal extends javax.swing.JFrame {
             Imagen Imagen = new Imagen();
             jPanel2.add(Imagen);
             jPanel2.repaint();
+            jBTabla.setVisible(false);
             
         } catch (SQLException | ExcepcionPersonal ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -63,7 +64,8 @@ public class VentPrincipal extends javax.swing.JFrame {
         jBlistar = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jBTabla = new javax.swing.JButton();
+        modBus = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuAcciones = new javax.swing.JMenu();
         jMinsertar = new javax.swing.JMenu();
@@ -149,10 +151,17 @@ public class VentPrincipal extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Listar/Tabla");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBTabla.setText("Listar/Tabla");
+        jBTabla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBTablaActionPerformed(evt);
+            }
+        });
+
+        modBus.setText("Mod. BUS");
+        modBus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modBusActionPerformed(evt);
             }
         });
 
@@ -167,12 +176,15 @@ public class VentPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jBbuscaMuestra)
                             .addComponent(jBborrar)
-                            .addComponent(jBinsertar)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jBinsertar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(modBus))
                             .addComponent(jBlimpiar)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jBlistar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(jBTabla)))
                         .addGap(46, 46, 46)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBSalir))
@@ -186,7 +198,9 @@ public class VentPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jBlimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBinsertar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBinsertar)
+                            .addComponent(modBus))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jBborrar)
                         .addGap(15, 15, 15)
@@ -194,7 +208,7 @@ public class VentPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBlistar)
-                            .addComponent(jButton1)))
+                            .addComponent(jBTabla)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jBSalir)
@@ -410,7 +424,7 @@ public class VentPrincipal extends javax.swing.JFrame {
 
     private void jMIborrarAutobusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIborrarAutobusActionPerformed
         // TODO add your handling code here:
-        VentBusId vent = new VentBusId(Buses, Chofers, "Borrar");
+        VentBusIdMOD vent = new VentBusIdMOD(Buses, Chofers, "Borrar");
         vent.setVisible(true);
     }//GEN-LAST:event_jMIborrarAutobusActionPerformed
 
@@ -456,7 +470,7 @@ public class VentPrincipal extends javax.swing.JFrame {
         vent.setVisible(true);
     }//GEN-LAST:event_jMIbuscaMuestraConductorActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTablaActionPerformed
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
@@ -465,7 +479,13 @@ public class VentPrincipal extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBTablaActionPerformed
+
+    private void modBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modBusActionPerformed
+        // TODO add your handling code here:
+        VentBusIdMOD vent = new VentBusIdMOD(Buses, Chofers, "Modificar");
+        vent.setVisible(true);        
+    }//GEN-LAST:event_modBusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,12 +524,12 @@ public class VentPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBSalir;
+    private javax.swing.JButton jBTabla;
     private javax.swing.JButton jBborrar;
     private javax.swing.JButton jBbuscaMuestra;
     private javax.swing.JButton jBinsertar;
     private javax.swing.JButton jBlimpiar;
     private javax.swing.JButton jBlistar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenuItem jMIborrarAutobus;
     private javax.swing.JMenuItem jMIborrarConductor;
@@ -529,5 +549,6 @@ public class VentPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMinsertar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton modBus;
     // End of variables declaration//GEN-END:variables
 }

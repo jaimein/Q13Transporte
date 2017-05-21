@@ -38,15 +38,17 @@ public class VentModificarBus extends javax.swing.JFrame {
             jClistaConductores.setEditable(false);
             jTprecioViaje.setText(String.valueOf(bus.getPrecioBaseViaje()));
             if (bus instanceof AutobusInterurbano) {
-                jRurbano.setEnabled(false);
+                //jRurbano.setEnabled(false);
                 jCruta.setEnabled(false);
                 jRinterurbano.setSelected(true);
+                jRurbano.setSelected(false);
                 jTkm.setText(String.valueOf(((AutobusInterurbano) bus).getKm()));
             }
             if (bus instanceof AutobusUrbano) {
                 jRinterurbano.setEnabled(false);
                 jTkm.setEnabled(false);
                 jRurbano.setSelected(true);
+                jRinterurbano.setSelected(false);
                 if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("A")) {
                     jCruta.setSelectedIndex(0);
                 }
@@ -58,15 +60,9 @@ public class VentModificarBus extends javax.swing.JFrame {
                 }
                 
             }
-            jCruta.setEditable(false);
+            
             jTmatLetras.setText(bus.getMatricula().getLetras());
             jTmatNum.setText(String.valueOf(bus.getMatricula().getNumero()));
-            jTId.setEditable(false);
-            jClistaConductores.setEditable(false);
-            jTprecioViaje.setEditable(false);
-            jTmatLetras.setEditable(false);
-            jTmatNum.setEditable(false);
-            jBguardar.setText("Atras");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             this.dispose();
@@ -81,6 +77,7 @@ public class VentModificarBus extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -200,9 +197,11 @@ public class VentModificarBus extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        buttonGroup1.add(jRurbano);
         jRurbano.setSelected(true);
         jRurbano.setText("Urbano");
 
+        buttonGroup1.add(jRinterurbano);
         jRinterurbano.setText("Interurbano");
         jRinterurbano.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -340,6 +339,7 @@ public class VentModificarBus extends javax.swing.JFrame {
             jCruta.setEnabled(true);
             jLruta.setEnabled(true);
             jTkm.setEnabled(false);
+            jTkm.setEditable(false);
             jLkm.setEnabled(false);
         }
     }//GEN-LAST:event_jRinterurbanoStateChanged
@@ -368,12 +368,12 @@ public class VentModificarBus extends javax.swing.JFrame {
                     // System.out.println(jCruta.geti);
                     // String ruta = jCruta.getItemAt(jCruta.getItemCount());
                     AutobusUrbano bus = new AutobusUrbano(id, cond, precio, matri, jCruta.getItemAt(jCruta.getSelectedIndex()));
-                    Buses.insertar(bus);
+                    Buses.modificar(bus);
                     JOptionPane.showMessageDialog(null, "Autobus introducido", "Valido", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 } else {
                     AutobusInterurbano bus = new AutobusInterurbano(id, cond, precio, matri, Integer.parseInt(jTkm.getText()));
-                    Buses.insertar(bus);
+                    Buses.modificar(bus);
                     JOptionPane.showMessageDialog(null, "Autobus introducido", "Valido", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 }
@@ -391,6 +391,7 @@ public class VentModificarBus extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBguardar;
     private javax.swing.JComboBox<String> jClistaConductores;
     private javax.swing.JComboBox<String> jCruta;

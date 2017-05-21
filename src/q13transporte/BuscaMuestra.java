@@ -6,8 +6,6 @@
 package q13transporte;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +23,6 @@ public class BuscaMuestra extends javax.swing.JFrame {
      *
      * @param conduc
      * @param accion
-     * @throws q13transporte.ExcepcionPersonal
      */
     public BuscaMuestra(ListaConductores conduc, String accion) {
         try {

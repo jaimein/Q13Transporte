@@ -345,7 +345,7 @@ public class ListaAutobus {
             con.conecta();
             con.crearSentencia();
             if (bus instanceof AutobusUrbano) {
-                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`=" + bus.getMatricula().matriculaToString() + ",`tipo`=1,`ruta`=" + ((AutobusUrbano) bus).getRuta() + ",`km`=0 WHERE numIdent='" + bus.getId() + "'";
+                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`='" + bus.getMatricula().matriculaToString() + "',`tipo`=1,`ruta`=" + ((AutobusUrbano) bus).getRuta() + ",`km`=0 WHERE numIdent='" + bus.getId() + "'";
             }
             if (bus instanceof AutobusInterurbano) {
                 sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`='" + bus.getMatricula().matriculaToString() + "',`tipo`=1,`km`=" + ((AutobusInterurbano) bus).getKm() + " WHERE numIdent='" + bus.getId() + "'";

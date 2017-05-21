@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author jaime
  */
-public class VentBusId extends javax.swing.JFrame {
+public class VentBusIdMOD extends javax.swing.JFrame {
 
     private String Accion;
     private ListaAutobus Buses;
@@ -25,7 +25,7 @@ public class VentBusId extends javax.swing.JFrame {
      * @param conduc
      * @param Accion
      */
-    public VentBusId(ListaAutobus bus, ListaConductores conduc, String Accion) {
+    public VentBusIdMOD(ListaAutobus bus, ListaConductores conduc, String Accion) {
         try {
             this.Chofers = new ListaConductores();
             this.Buses = new ListaAutobus();
@@ -131,19 +131,20 @@ public class VentBusId extends javax.swing.JFrame {
 
     private void jBsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsiguienteActionPerformed
         // TODO add your handling code here:
-        if (Accion.equalsIgnoreCase("Borrar")) {
+        
             try {
-                Buses.borrarPorId(jTid.getText());
-                JOptionPane.showMessageDialog(null, "Autobus borrado", "Valido", JOptionPane.INFORMATION_MESSAGE);
+                if (jTid.getText().equalsIgnoreCase("")) {
+                    throw new ExcepcionPersonal("El id no puede estar en blanco");
+                }
+                VentModificarBus vent = new VentModificarBus(Buses, Chofers, Accion, jTid.getText());
+                vent.setVisible(true);
                 this.dispose();
             } catch (ExcepcionPersonal ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
-            
-        }
-        }
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        
     }//GEN-LAST:event_jBsiguienteActionPerformed
 
     private void jBatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBatrasActionPerformed

@@ -156,7 +156,7 @@ public class VentEleccion extends javax.swing.JFrame {
             }
         }
         if (Accion.equalsIgnoreCase("Borrar")) {
-            VentBusId vent = new VentBusId(Buses, Chofers, Accion);
+            VentBusIdMOD vent = new VentBusIdMOD(Buses, Chofers, Accion);
             vent.setVisible(true);
         }
         if (Accion.equalsIgnoreCase("BuscaMuestra")) {
