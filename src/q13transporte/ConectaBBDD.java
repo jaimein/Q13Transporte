@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import q13transporte.ExcepcionPersonal;
 
 /**
  *
@@ -50,12 +51,10 @@ public class ConectaBBDD {
             jdbcUrl = "jdbc:mysql://localhost:3306/Autobuses";
             conn = DriverManager.getConnection(jdbcUrl, "root", "");
             System.out.println("Conexión establecida con la Base de datos...");
-        } catch (SQLException se) {
-            //Errores de JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Errores de Class.forName
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

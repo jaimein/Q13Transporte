@@ -5,6 +5,9 @@
  */
 package q13transporte;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,9 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class VentInsBus extends javax.swing.JFrame {
 
-    private final String Accion;
-    private ListaAutobus Buses = new ListaAutobus();
-    private ListaConductores Chofers = new ListaConductores();
+    private String Accion;
+    private ListaAutobus Buses;
+    private ListaConductores Chofers;
     private Autobus autobus;
 
     /**
@@ -27,105 +30,126 @@ public class VentInsBus extends javax.swing.JFrame {
      * @throws q13transporte.ExcepcionPersonal
      */
     public VentInsBus(ListaAutobus bus, ListaConductores conduc, String Accion) throws ExcepcionPersonal {
-        initComponents();
-        this.Buses = bus;
-        this.Chofers = conduc;
-        this.Accion = Accion;
-        if (Accion.equalsIgnoreCase("Insertar")) {
-
-            jClistaConductores.addItem(conduc.primer().getNombre());
-            if (!conduc.isUltimo()) {
-                do {
-                    jClistaConductores.addItem(conduc.siguiente().getNombre());
-                } while (!(Chofers.isUltimo()));
-            }
-            jTkm.setEnabled(false);
-            jLkm.setEnabled(false);
-            jPbotonesNav.setVisible(false);
-        }
-        if (Accion.equalsIgnoreCase("Listar")) {
-            jPguardar.setVisible(false);
-            jPbotonesNav.setVisible(true);
-            autobus = Buses.primer();
-            jTId.setText(String.valueOf(autobus.getId()));
-            jClistaConductores.addItem(autobus.getConductor().getNombre());
-            jClistaConductores.setSelectedIndex(1);
-            jTprecioViaje.setText(String.valueOf(autobus.getPrecioBaseViaje()));
-            if (autobus instanceof AutobusInterurbano) {
-                jRurbano.setEnabled(false);
-                jCruta.setEnabled(false);
-                jRinterurbano.setSelected(true);
-                jTkm.setText(String.valueOf(((AutobusInterurbano) autobus).getKm()));
-            }
-            if (autobus instanceof AutobusUrbano) {
-                jRinterurbano.setEnabled(false);
+        try {
+            this.Chofers = new ListaConductores();
+            this.Buses = new ListaAutobus();
+            initComponents();
+            this.Buses = bus;
+            this.Chofers = conduc;
+            this.Accion = Accion;
+            if (Accion.equalsIgnoreCase("Insertar")) {
+                
+                jClistaConductores.addItem(conduc.primer().getNombre());
+                if (!conduc.isUltimo()) {
+                    do {
+                        jClistaConductores.addItem(conduc.siguiente().getNombre());
+                    } while (!(Chofers.isUltimo()));
+                }
                 jTkm.setEnabled(false);
-                jRurbano.setSelected(true);
-                if (((AutobusUrbano) autobus).getRuta().equalsIgnoreCase("A")) {
-                    jCruta.setSelectedIndex(0);
-                }
-                if (((AutobusUrbano) autobus).getRuta().equalsIgnoreCase("B")) {
-                    jCruta.setSelectedIndex(1);
-                }
-                if (((AutobusUrbano) autobus).getRuta().equalsIgnoreCase("C")) {
-                    jCruta.setSelectedIndex(2);
-                }
-                jCruta.setEditable(false);
+                jLkm.setEnabled(false);
+                jPbotonesNav.setVisible(false);
             }
-            jTmatLetras.setText(autobus.getMatricula().getLetras());
-            jTmatNum.setText(String.valueOf(autobus.getMatricula().getNumero()));
-            jTId.setEditable(false);
-            jClistaConductores.setEditable(false);
-            jTprecioViaje.setEditable(false);
-            jTmatLetras.setEditable(false);
-            jTmatNum.setEditable(false);
-
+            if (Accion.equalsIgnoreCase("Listar")) {
+                jPguardar.setVisible(false);
+                jPbotonesNav.setVisible(true);
+                autobus = Buses.primer();
+                jTId.setText(String.valueOf(autobus.getId()));
+                jClistaConductores.addItem(autobus.getConductor().getNombre());
+                jClistaConductores.setSelectedIndex(1);
+                jTprecioViaje.setText(String.valueOf(autobus.getPrecioBaseViaje()));
+                if (autobus instanceof AutobusInterurbano) {
+                    jRurbano.setEnabled(false);
+                    jCruta.setEnabled(false);
+                    jRinterurbano.setSelected(true);
+                    jTkm.setText(String.valueOf(((AutobusInterurbano) autobus).getKm()));
+                }
+                if (autobus instanceof AutobusUrbano) {
+                    jRinterurbano.setEnabled(false);
+                    jTkm.setEnabled(false);
+                    jRurbano.setSelected(true);
+                    if (((AutobusUrbano) autobus).getRuta().equalsIgnoreCase("A")) {
+                        jCruta.setSelectedIndex(0);
+                    }
+                    if (((AutobusUrbano) autobus).getRuta().equalsIgnoreCase("B")) {
+                        jCruta.setSelectedIndex(1);
+                    }
+                    if (((AutobusUrbano) autobus).getRuta().equalsIgnoreCase("C")) {
+                        jCruta.setSelectedIndex(2);
+                    }
+                    jCruta.setEditable(false);
+                }
+                jTmatLetras.setText(autobus.getMatricula().getLetras());
+                jTmatNum.setText(String.valueOf(autobus.getMatricula().getNumero()));
+                jTId.setEditable(false);
+                jClistaConductores.setEditable(false);
+                jTprecioViaje.setEditable(false);
+                jTmatLetras.setEditable(false);
+                jTmatNum.setEditable(false);
+                
+            }
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            
         }
 
     }
 
     VentInsBus(ListaAutobus Buses, ListaConductores Chofers, String Accion, int id) throws ExcepcionPersonal {
-        initComponents();
-        this.Buses = Buses;
-        this.Chofers = Chofers;
-        this.Accion = Accion;
-        Autobus bus;
-        bus = Buses.devAutobus(id);
-        jPbotonesNav.setVisible(false);
-        jTId.setText(String.valueOf(bus.getId()));
-        jClistaConductores.addItem(bus.getConductor().getNombre());
-        jClistaConductores.setSelectedIndex(1);
-        jClistaConductores.setEditable(false);
-        jTprecioViaje.setText(String.valueOf(bus.getPrecioBaseViaje()));
-        if (bus instanceof AutobusInterurbano) {
-            jRurbano.setEnabled(false);
-            jCruta.setEnabled(false);
-            jRinterurbano.setSelected(true);
-            jTkm.setText(String.valueOf(((AutobusInterurbano) bus).getKm()));
+        try {
+            this.Chofers = new ListaConductores();
+            this.Buses = new ListaAutobus();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Buses = Buses;
+            this.Chofers = Chofers;
+            this.Accion = Accion;
+            Autobus bus;
+            bus = Buses.devAutobus(String.valueOf(id));
+            jPbotonesNav.setVisible(false);
+            jTId.setText(String.valueOf(bus.getId()));
+            jClistaConductores.addItem(bus.getConductor().getNombre());
+            jClistaConductores.setSelectedIndex(1);
+            jClistaConductores.setEditable(false);
+            jTprecioViaje.setText(String.valueOf(bus.getPrecioBaseViaje()));
+            if (bus instanceof AutobusInterurbano) {
+                jRurbano.setEnabled(false);
+                jCruta.setEnabled(false);
+                jRinterurbano.setSelected(true);
+                jTkm.setText(String.valueOf(((AutobusInterurbano) bus).getKm()));
+            }
+            if (bus instanceof AutobusUrbano) {
+                jRinterurbano.setEnabled(false);
+                jTkm.setEnabled(false);
+                jRurbano.setSelected(true);
+                if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("A")) {
+                    jCruta.setSelectedIndex(0);
+                }
+                if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("B")) {
+                    jCruta.setSelectedIndex(1);
+                }
+                if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("C")) {
+                    jCruta.setSelectedIndex(2);
+                }
+                jCruta.setEditable(false);
+            }
+            jTmatLetras.setText(bus.getMatricula().getLetras());
+            jTmatNum.setText(String.valueOf(bus.getMatricula().getNumero()));
+            jTId.setEditable(false);
+            jClistaConductores.setEditable(false);
+            jTprecioViaje.setEditable(false);
+            jTmatLetras.setEditable(false);
+            jTmatNum.setEditable(false);
+            jBguardar.setText("Atras");
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            
         }
-        if (bus instanceof AutobusUrbano) {
-            jRinterurbano.setEnabled(false);
-            jTkm.setEnabled(false);
-            jRurbano.setSelected(true);
-            if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("A")) {
-                jCruta.setSelectedIndex(0);
-            }
-            if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("B")) {
-                jCruta.setSelectedIndex(1);
-            }
-            if (((AutobusUrbano) bus).getRuta().equalsIgnoreCase("C")) {
-                jCruta.setSelectedIndex(2);
-            }
-            jCruta.setEditable(false);
-        }
-        jTmatLetras.setText(bus.getMatricula().getLetras());
-        jTmatNum.setText(String.valueOf(bus.getMatricula().getNumero()));
-        jTId.setEditable(false);
-        jClistaConductores.setEditable(false);
-        jTprecioViaje.setEditable(false);
-        jTmatLetras.setEditable(false);
-        jTmatNum.setEditable(false);
-        jBguardar.setText("Atras");
     }
 
     /**
@@ -492,7 +516,7 @@ public class VentInsBus extends javax.swing.JFrame {
             String letMa;
             try {
                 id = Integer.parseInt(jTId.getText());
-                cond = Chofers.devConductorId(jClistaConductores.getSelectedIndex() - 1);
+                cond = Chofers.devConductorId(String.valueOf(jClistaConductores.getSelectedIndex() - 1));
                 precio = Float.parseFloat(jTprecioViaje.getText());
                 letMa = jTmatLetras.getText();
                 numMa = Long.parseLong(jTmatNum.getText());
@@ -501,12 +525,12 @@ public class VentInsBus extends javax.swing.JFrame {
                 if (jRurbano.isSelected()) {
                     // System.out.println(jCruta.geti);
                     // String ruta = jCruta.getItemAt(jCruta.getItemCount());
-                    AutobusUrbano bus = new AutobusUrbano(id, cond, precio, matri, jCruta.getItemAt(jCruta.getSelectedIndex()));
+                    AutobusUrbano bus = new AutobusUrbano(String.valueOf(id), cond, precio, matri, jCruta.getItemAt(jCruta.getSelectedIndex()));
                     Buses.insertar(bus);
                     JOptionPane.showMessageDialog(null, "Autobus introducido", "Valido", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 } else {
-                    AutobusInterurbano bus = new AutobusInterurbano(id, cond, precio, matri, Integer.parseInt(jTkm.getText()));
+                    AutobusInterurbano bus = new AutobusInterurbano(String.valueOf(id), cond, precio, matri, Integer.parseInt(jTkm.getText()));
                     Buses.insertar(bus);
                     JOptionPane.showMessageDialog(null, "Autobus introducido", "Valido", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();

@@ -5,6 +5,9 @@
  */
 package q13transporte;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,29 +18,46 @@ public class BuscaMuestra extends javax.swing.JFrame {
 
     private ListaConductores Chofers;
     String Accion;
-    private ListaAutobus Buses = new ListaAutobus();
+    private ListaAutobus Buses;
 
     /**
      * Creates new form BuscaMuestra
      *
      * @param conduc
      * @param accion
+     * @throws q13transporte.ExcepcionPersonal
      */
-    public BuscaMuestra(ListaConductores conduc, String accion) throws ExcepcionPersonal {
-        this.Chofers = new ListaConductores();
-        initComponents();
-        this.Chofers = conduc;
-        this.Accion = accion;
-        jPbus.setVisible(false);
+    public BuscaMuestra(ListaConductores conduc, String accion) {
+        try {
+            this.Buses = new ListaAutobus();
+            this.Chofers = new ListaConductores();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Chofers = conduc;
+            this.Accion = accion;
+            jPbus.setVisible(false);
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    BuscaMuestra(ListaAutobus Buses, ListaConductores Chofers, String Accion) throws ExcepcionPersonal {
-        this.Chofers = new ListaConductores();
-        initComponents();
-        this.Chofers = Chofers;
-        this.Accion = Accion;
-        this.Buses = Buses;
-        jPcond.setVisible(false);
+    BuscaMuestra(ListaAutobus Buses, ListaConductores Chofers, String Accion) {
+        try {
+            this.Buses = new ListaAutobus();
+            this.Chofers = new ListaConductores();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Chofers = Chofers;
+            this.Accion = Accion;
+            this.Buses = Buses;
+            jPcond.setVisible(false);
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -210,8 +230,8 @@ public class BuscaMuestra extends javax.swing.JFrame {
                 this.dispose();
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception ex){
-                JOptionPane.showMessageDialog(null, "Error", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         if (jPbus.isVisible()) {
@@ -224,11 +244,9 @@ public class BuscaMuestra extends javax.swing.JFrame {
                 this.dispose();
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Debe de ser numerico", "Error", JOptionPane.ERROR_MESSAGE);
-            }/* catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error", "Error", JOptionPane.ERROR_MESSAGE);
-            }*/
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jBbuscarActionPerformed
 

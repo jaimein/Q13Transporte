@@ -5,9 +5,11 @@
  */
 package q13transporte;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.Image;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import q13transporte.img.Imagen;
 
 /**
  *
@@ -15,15 +17,31 @@ import javax.swing.JOptionPane;
  */
 public class VentPrincipal extends javax.swing.JFrame {
 
-    private ListaAutobus Buses = new ListaAutobus();
-    private ListaConductores Chofers = new ListaConductores();
+    private ListaAutobus Buses;
+    private ListaConductores Chofers;
 
     /**
      * Creates new form VentPrincipal
      */
     public VentPrincipal() {
-        initComponents();
-        
+        try {
+
+            this.Chofers = new ListaConductores();
+            this.Buses = new ListaAutobus();
+            initComponents();
+            setLocationRelativeTo(null);
+            jBlimpiar.setVisible(false);
+            Imagen Imagen = new Imagen();
+            jPanel2.add(Imagen);
+            jPanel2.repaint();
+            
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
 
     }
 
@@ -36,6 +54,7 @@ public class VentPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         jPanel1 = new javax.swing.JPanel();
         jBlimpiar = new javax.swing.JButton();
         jBinsertar = new javax.swing.JButton();
@@ -43,6 +62,7 @@ public class VentPrincipal extends javax.swing.JFrame {
         jBbuscaMuestra = new javax.swing.JButton();
         jBlistar = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuAcciones = new javax.swing.JMenu();
@@ -61,7 +81,19 @@ public class VentPrincipal extends javax.swing.JFrame {
         jMIbuscaMuestraAutobus = new javax.swing.JMenuItem();
         jMIbuscaMuestraConductor = new javax.swing.JMenuItem();
 
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Transporte Jaime");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jBlimpiar.setText("Limpiar lista");
@@ -106,7 +138,18 @@ public class VentPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Insertar Aleatorios");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 147, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jButton1.setText("Listar/Tabla");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -117,48 +160,45 @@ public class VentPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(208, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBbuscaMuestra)
+                            .addComponent(jBborrar)
+                            .addComponent(jBinsertar)
+                            .addComponent(jBlimpiar)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jBlistar)
-                                .addComponent(jBbuscaMuestra)
-                                .addComponent(jBborrar)
-                                .addComponent(jBinsertar)
-                                .addComponent(jBlimpiar))
-                            .addGap(194, 194, 194))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBSalir)))
-                    .addContainerGap(31, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))
+                        .addGap(46, 46, 46)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBSalir))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(jButton1)
-                .addContainerGap(142, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jBlimpiar)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jBinsertar)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jBborrar)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jBbuscaMuestra)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jBlistar)
-                    .addGap(18, 18, 18)
-                    .addComponent(jBSalir)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jBlimpiar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBinsertar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBborrar)
+                        .addGap(15, 15, 15)
+                        .addComponent(jBbuscaMuestra)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBlistar)
+                            .addComponent(jButton1)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jBSalir)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jMenuAcciones.setText("Acciones");
@@ -293,8 +333,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             // TODO add your handling code here:
             VentEleccion ventEleccion = new VentEleccion(Buses, Chofers, "Limpiar lista");
             ventEleccion.setVisible(true);
-        } catch (ExcepcionPersonal ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBlimpiarActionPerformed
 
@@ -303,43 +343,10 @@ public class VentPrincipal extends javax.swing.JFrame {
             // TODO add your handling code here:
             VentEleccion ventEleccion = new VentEleccion(Buses, Chofers, "Insertar");
             ventEleccion.setVisible(true);
-        } catch (ExcepcionPersonal ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBinsertarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Conductor cond = new Conductor("pru1", 1234);
-        Conductor cond2 = new Conductor("pru2", 4321);
-        Conductor cond3 = new Conductor("pru3", 543);
-        Conductor cond4 = new Conductor("pru4", 543);
-        Conductor cond5 = new Conductor("pru5", 543);
-        Matricula ma;
-        try {
-            ma = new Matricula("asd", 1234);
-            AutobusUrbano urb1 = new AutobusUrbano(1, cond, 22, ma, "A");
-            AutobusUrbano urb2 = new AutobusUrbano(2, cond2, 1, new Matricula("qwe", 3214), "b");
-            AutobusUrbano urb3 = new AutobusUrbano(3, cond3, 1, new Matricula("rty", 3214), "c");
-            AutobusInterurbano int1 = new AutobusInterurbano(4, cond4, 3, new Matricula("qwe", 7897), 20);
-            AutobusInterurbano int2 = new AutobusInterurbano(5, cond5, 3, new Matricula("qwe", 6574), 20);
-            ////Trampa
-            Chofers.insertar(cond);
-            Chofers.insertar(cond2);
-            Chofers.insertar(cond3);
-            Chofers.insertar(cond4);
-            Chofers.insertar(cond5);
-            Buses.insertar(int2);
-            Buses.insertar(urb1);
-            Buses.insertar(urb3);
-            Buses.insertar(urb2);
-            Buses.insertar(int1);
-            JOptionPane.showMessageDialog(null, "sE HAN INTRODUCIDO DATOS", "VALIDO", JOptionPane.INFORMATION_MESSAGE);
-        } catch (ExcepcionPersonal ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarActionPerformed
         // TODO add your handling code here:
@@ -347,8 +354,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             // TODO add your handling code here:
             VentEleccion ventEleccion = new VentEleccion(Buses, Chofers, "Borrar");
             ventEleccion.setVisible(true);
-        } catch (ExcepcionPersonal ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBborrarActionPerformed
 
@@ -358,8 +365,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             // TODO add your handling code here:
             VentEleccion ventEleccion = new VentEleccion(Buses, Chofers, "BuscaMuestra");
             ventEleccion.setVisible(true);
-        } catch (ExcepcionPersonal ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jBbuscaMuestraActionPerformed
@@ -370,8 +377,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             // TODO add your handling code here:
             VentEleccion ventEleccion = new VentEleccion(Buses, Chofers, "Listar");
             ventEleccion.setVisible(true);
-        } catch (ExcepcionPersonal ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBlistarActionPerformed
 
@@ -383,6 +390,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             vent.setVisible(true);
         } catch (ExcepcionPersonal ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMIinsertarAutobusActionPerformed
 
@@ -394,6 +403,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             vent.setVisible(true);
         } catch (ExcepcionPersonal ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMIinsertarConductorActionPerformed
 
@@ -416,6 +427,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             vent.setVisible(true);
         } catch (ExcepcionPersonal ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMIlistarAutobusActionPerformed
 
@@ -426,6 +439,8 @@ public class VentPrincipal extends javax.swing.JFrame {
             vent.setVisible(true);
         } catch (ExcepcionPersonal ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMIlistarConductorActionPerformed
 
@@ -440,6 +455,17 @@ public class VentPrincipal extends javax.swing.JFrame {
         BuscaMuestra vent = new BuscaMuestra(Chofers, "BuscaMuestra");
         vent.setVisible(true);
     }//GEN-LAST:event_jMIbuscaMuestraConductorActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            VentBusTable vent = new VentBusTable(Buses, Chofers, "Listar");
+            vent.setVisible(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -484,6 +510,7 @@ public class VentPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jBlimpiar;
     private javax.swing.JButton jBlistar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenuItem jMIborrarAutobus;
     private javax.swing.JMenuItem jMIborrarConductor;
     private javax.swing.JMenuItem jMIbuscaMuestraAutobus;
@@ -501,5 +528,6 @@ public class VentPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuVer;
     private javax.swing.JMenu jMinsertar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,7 @@ public class ListaAutobus {
 
     //Atributos
     private ArrayList<Autobus> listaBuses = new ArrayList<Autobus>();
-    private int x = 0;
+    private int x = -1;
 //Constructor
 
     public ListaAutobus() throws ExcepcionPersonal, SQLException {
@@ -47,10 +47,10 @@ public class ListaAutobus {
             con.conecta();
             con.crearSentencia();
             if (bus instanceof AutobusUrbano) {
-                sentSql = "INSERT INTO `Autobuses` (`numIdent`, `codConductor`, `precioBase`, `matricula`, `tipo`, `ruta`, `km`) VALUES ('" + bus.getId() + "', '" + bus.getConductor().getCodConductor() + "', '" + bus.getPrecioBaseViaje() + "', '" + bus.getMatricula().MatriculaToString() + "', '1', '" + ((AutobusUrbano) bus).getRuta() + "', '0'); ";
+                sentSql = "INSERT INTO `Autobuses` (`numIdent`, `codConductor`, `precioBase`, `matricula`, `tipo`, `ruta`, `km`) VALUES ('" + bus.getId() + "', '" + bus.getConductor().getCodConductor() + "', '" + bus.getPrecioBaseViaje() + "', '" + bus.getMatricula().matriculaToString() + "', '1', '" + ((AutobusUrbano) bus).getRuta() + "', '0'); ";
             }
             if (bus instanceof AutobusInterurbano) {
-                sentSql = "INSERT INTO `Autobuses` (`numIdent`, `codConductor`, `precioBase`, `matricula`, `tipo`, `km`) VALUES ('" + bus.getId() + "', '" + bus.getConductor().getCodConductor() + "', '" + bus.getPrecioBaseViaje() + "', '" + bus.getMatricula().MatriculaToString() + "', '1', '" + ((AutobusInterurbano) bus).getKm() + "'); ";
+                sentSql = "INSERT INTO `Autobuses` (`numIdent`, `codConductor`, `precioBase`, `matricula`, `tipo`, `km`) VALUES ('" + bus.getId() + "', '" + bus.getConductor().getCodConductor() + "', '" + bus.getPrecioBaseViaje() + "', '" + bus.getMatricula().matriculaToString() + "', '1', '" + ((AutobusInterurbano) bus).getKm() + "'); ";
             }
             System.out.println(sentSql);
             con.updateSQL(sentSql);
@@ -141,9 +141,9 @@ public class ListaAutobus {
      * @throws q13transporte.ExcepcionPersonal
      */
     public void limpiar() throws ExcepcionPersonal {
-        hay();
+        //hay();
         listaBuses.clear();
-        x=0;
+        x=-1;
     }
 
     /**
@@ -304,8 +304,9 @@ public class ListaAutobus {
         lc = new ListaConductores();
         ConectaBBDD con = new ConectaBBDD();
         String sentSql;
-        listaBuses.clear();
-        x = 0;
+       // listaBuses.clear();
+        //x = -1;
+        limpiar();
         try {
 
             con.conecta();
@@ -313,24 +314,24 @@ public class ListaAutobus {
             sentSql = "SELECT a.numIdent,a.codConductor,a.precioBase,a.matricula,t.descripcion,a.ruta,a.km FROM Autobuses a,Tipos t WHERE a.tipo = t.codigo ";
             con.ejecutaSQL(sentSql);
             while (con.rs.next()) {
-                System.out.println(con.rs.getString(5).equalsIgnoreCase("Urbano"));
+                //System.out.println(con.rs.getString(5).equalsIgnoreCase("Urbano"));
                 if (con.rs.getString(5).equalsIgnoreCase("Urbano")) {
-                    AutobusUrbano bus = new AutobusUrbano(con.rs.getString(1), lc.devConductorId(con.rs.getString(2)), con.rs.getFloat(3), new Matricula(con.rs.getString(4).substring(0, 3), Long.parseLong(con.rs.getString(4).substring(3, 7))), con.rs.getString(5));
+                    AutobusUrbano bus = new AutobusUrbano(con.rs.getString(1), lc.devConductorId(con.rs.getString(2)), con.rs.getFloat(3), new Matricula(con.rs.getString(4).substring(0, 3), Long.parseLong(con.rs.getString(4).substring(3, 7))), con.rs.getString(6));
                     listaBuses.add(bus);
                 }
                 if (con.rs.getString(5).equalsIgnoreCase("Interurbano")) {
-                    AutobusInterurbano bus = new AutobusInterurbano(con.rs.getString(1), lc.devConductorId(con.rs.getString(2)), con.rs.getFloat(3), new Matricula(con.rs.getString(4).substring(0, 3), Long.parseLong(con.rs.getString(4).substring(3, 7))), con.rs.getInt(6));
+                    AutobusInterurbano bus = new AutobusInterurbano(con.rs.getString(1), lc.devConductorId(con.rs.getString(2)), con.rs.getFloat(3), new Matricula(con.rs.getString(4).substring(0, 3), Long.parseLong(con.rs.getString(4).substring(3, 7))), con.rs.getInt(7));
                     listaBuses.add(bus);
                 }
 
-                System.out.println(con.rs.getString(1) + ", " + con.rs.getString(5));
+                //System.out.println(con.rs.getString(1) + ", " + con.rs.getString(5));
 
             }
             con.cerrarConexion();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Atención!", JOptionPane.ERROR_MESSAGE);
-        }
+        } //añadir error generico
     }
 
     public void modificar(Autobus bus) throws ExcepcionPersonal {
@@ -344,10 +345,10 @@ public class ListaAutobus {
             con.conecta();
             con.crearSentencia();
             if (bus instanceof AutobusUrbano) {
-                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`=" + bus.getMatricula().MatriculaToString() + ",`tipo`=1,`ruta`=" + ((AutobusUrbano) bus).getRuta() + ",`km`=0 WHERE numIdent='" + bus.getId() + "'";
+                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`=" + bus.getMatricula().matriculaToString() + ",`tipo`=1,`ruta`=" + ((AutobusUrbano) bus).getRuta() + ",`km`=0 WHERE numIdent='" + bus.getId() + "'";
             }
             if (bus instanceof AutobusInterurbano) {
-                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`='" + bus.getMatricula().MatriculaToString() + "',`tipo`=1,`km`=" + ((AutobusInterurbano) bus).getKm() + " WHERE numIdent='" + bus.getId() + "'";
+                sentSql = "UPDATE `Autobuses` SET `codConductor`=" + bus.getConductor().getCodConductor() + ",`precioBase`=" + bus.getPrecioBaseViaje() + ",`matricula`='" + bus.getMatricula().matriculaToString() + "',`tipo`=1,`km`=" + ((AutobusInterurbano) bus).getKm() + " WHERE numIdent='" + bus.getId() + "'";
             }
             System.out.println(sentSql);
             con.updateSQL(sentSql);

@@ -5,10 +5,8 @@
  */
 package q13transporte;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
@@ -16,9 +14,9 @@ import javax.swing.JTextField;
  */
 public class VentEleccion extends javax.swing.JFrame {
 
-    private final String Accion;
-    private ListaAutobus Buses = new ListaAutobus();
-    private ListaConductores Chofers = new ListaConductores();
+    private ListaAutobus Buses;
+    private ListaConductores Chofers;
+    private String Accion;
 
     /**
      * Creates new form VentEleccion
@@ -27,17 +25,26 @@ public class VentEleccion extends javax.swing.JFrame {
      * @param conduc
      * @param Accion
      */
-    public VentEleccion(ListaAutobus bus, ListaConductores conduc, String Accion) throws ExcepcionPersonal {
-        initComponents();
-        this.Buses = bus;
-        this.Chofers = conduc;
-        this.Accion = Accion;
-        /*if (Accion.equalsIgnoreCase("BuscaMuestra")) {
+    public VentEleccion(ListaAutobus bus, ListaConductores conduc, String Accion) {
+        try {
+            this.Chofers = new ListaConductores();
+            this.Buses = new ListaAutobus();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Buses = bus;
+            this.Chofers = conduc;
+            this.Accion = Accion;
+            /*if (Accion.equalsIgnoreCase("BuscaMuestra")) {
             JTextField jTbusca = new javax.swing.JTextField("  ", 20);
             add(jTbusca);
             jTbusca.setBounds(WIDTH, WIDTH, WIDTH, HEIGHT);
             jTbusca.setVisible(true);
-        }*/
+            }*/
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
@@ -132,6 +139,8 @@ public class VentEleccion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Eliminados registros", "Limpiar", JOptionPane.INFORMATION_MESSAGE);
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
             }
             this.dispose();
         }
@@ -142,6 +151,8 @@ public class VentEleccion extends javax.swing.JFrame {
                 vent.setVisible(true);
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         if (Accion.equalsIgnoreCase("Borrar")) {
@@ -158,6 +169,8 @@ public class VentEleccion extends javax.swing.JFrame {
                 vent.setVisible(true);
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         this.dispose();
@@ -171,6 +184,8 @@ public class VentEleccion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Eliminados registros", "Limpiar", JOptionPane.INFORMATION_MESSAGE);
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
             }
             this.dispose();
         }
@@ -182,8 +197,10 @@ public class VentEleccion extends javax.swing.JFrame {
                 vent.setVisible(true);
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         }
         if (Accion.equalsIgnoreCase("Borrar")) {
             VentCondNombre vent = new VentCondNombre(Buses, Chofers, Accion);
@@ -199,6 +216,8 @@ public class VentEleccion extends javax.swing.JFrame {
                 vent.setVisible(true);
             } catch (ExcepcionPersonal ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         this.dispose();

@@ -5,7 +5,10 @@
  */
 package q13transporte;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,19 +17,30 @@ import javax.swing.JOptionPane;
  */
 public class VentCondNombre extends javax.swing.JFrame {
 
-    private final String Accion;
-    private ListaAutobus Buses = new ListaAutobus();
-    private ListaConductores Chofers = new ListaConductores();
+    private String Accion;
+    private ListaAutobus Buses;
+    private ListaConductores Chofers;
 
     /**
      * Creates new form VentCondNombre
      */
     public VentCondNombre(ListaAutobus bus, ListaConductores conduc, String Accion) {
-        initComponents();
-        this.Buses = bus;
-        this.Chofers = conduc;
-        this.Accion = Accion;
-        jLaccion.setText(Accion);
+        try {
+            this.Chofers = new ListaConductores();
+            this.Buses = new ListaAutobus();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Buses = bus;
+            this.Chofers = conduc;
+            this.Accion = Accion;
+            jLaccion.setText(Accion);
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     /**
@@ -132,8 +146,12 @@ public class VentCondNombre extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, "Conductor borrado", "Valido", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
-            } catch (ExcepcionPersonal e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException | ExcepcionPersonal ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+
             }
         }
     }//GEN-LAST:event_jBsiguienteActionPerformed

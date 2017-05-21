@@ -5,6 +5,7 @@
  */
 package q13transporte;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class VentInsCond extends javax.swing.JFrame {
 
-    private ListaConductores Chofers = new ListaConductores();
+    private ListaConductores Chofers;
     private String Accion;
     private Conductor mostCond;
 
@@ -27,22 +28,32 @@ public class VentInsCond extends javax.swing.JFrame {
      * @throws q13transporte.ExcepcionPersonal
      */
     public VentInsCond(ListaConductores conduc, String accion) throws ExcepcionPersonal {
-        initComponents();
-        this.Chofers = conduc;
-        this.Accion = accion;
-        jPbotonesNav.setVisible(false);
-        if (Accion.equalsIgnoreCase("Listar")) {
-            jPboton.setVisible(false);
-            jPbotonesNav.setVisible(true);
-            mostCond = Chofers.primer();
-            jTnombre.setText(mostCond.getNombre());
-            jTsalario.setText(String.valueOf(mostCond.getSalario()));
-            jTnombre.setEditable(false);
-            jTsalario.setEditable(false);
-            jBant.setEnabled(false);
-            jBprimero.setEnabled(false);
-            jTpos.setText(String.valueOf(Chofers.pos()+1));
-            jTpos.setEditable(false);
+        try {
+            this.Chofers = new ListaConductores();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Chofers = conduc;
+            this.Accion = accion;
+            jPbotonesNav.setVisible(false);
+            if (Accion.equalsIgnoreCase("Listar")) {
+                jPboton.setVisible(false);
+                jPbotonesNav.setVisible(true);
+                mostCond = Chofers.primer();
+                jTnombre.setText(mostCond.getNombre());
+                jTsalario.setText(String.valueOf(mostCond.getSalario()));
+                jTnombre.setEditable(false);
+                jTsalario.setEditable(false);
+                jBant.setEnabled(false);
+                jBprimero.setEnabled(false);
+                jTpos.setText(String.valueOf(Chofers.pos()+1));
+                jTpos.setEditable(false);
+            }
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            
         }
     }
 
@@ -55,17 +66,27 @@ public class VentInsCond extends javax.swing.JFrame {
      * @throws q13transporte.ExcepcionPersonal
      */
     public VentInsCond(ListaConductores conduc, String accion, String nombre) throws ExcepcionPersonal {
-        initComponents();
-        this.Chofers = conduc;
-        this.Accion = accion;
-        jPbotonesNav.setVisible(false);
-        if (Accion.equalsIgnoreCase("BuscaMuestra")) {
-            mostCond = Chofers.devConductorNom(nombre);
-            jTnombre.setText(mostCond.getNombre());
-            jTsalario.setText(String.valueOf(mostCond.getSalario()));
-            jTnombre.setEditable(false);
-            jTsalario.setEditable(false);
-            jBguardar.setText("Atras");
+        try {
+            this.Chofers = new ListaConductores();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Chofers = conduc;
+            this.Accion = accion;
+            jPbotonesNav.setVisible(false);
+            if (Accion.equalsIgnoreCase("BuscaMuestra")) {
+                mostCond = Chofers.devConductorNom(nombre);
+                jTnombre.setText(mostCond.getNombre());
+                jTsalario.setText(String.valueOf(mostCond.getSalario()));
+                jTnombre.setEditable(false);
+                jTsalario.setEditable(false);
+                jBguardar.setText("Atras");
+            }
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            
         }
     }
 

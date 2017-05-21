@@ -5,6 +5,7 @@
  */
 package q13transporte;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -15,21 +16,34 @@ import javax.swing.JOptionPane;
  */
 public class VentBusId extends javax.swing.JFrame {
 
-    private final String Accion;
-    private ListaAutobus Buses = new ListaAutobus();
-    private ListaConductores Chofers = new ListaConductores();
+    private String Accion;
+    private ListaAutobus Buses;
+    private ListaConductores Chofers;
+
     /**
      * Creates new form VentBusId
+     *
      * @param bus
      * @param conduc
      * @param Accion
      */
     public VentBusId(ListaAutobus bus, ListaConductores conduc, String Accion) {
-        initComponents();
-        this.Buses = bus;
-        this.Chofers = conduc;
-        this.Accion = Accion;
-        jLaccion.setText(Accion);
+        try {
+            this.Chofers = new ListaConductores();
+            this.Buses = new ListaAutobus();
+            initComponents();
+            setLocationRelativeTo(null);
+            this.Buses = bus;
+            this.Chofers = conduc;
+            this.Accion = Accion;
+            jLaccion.setText(Accion);
+        } catch (SQLException | ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
     }
 
     /**
@@ -121,14 +135,16 @@ public class VentBusId extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (Accion.equalsIgnoreCase("Borrar")) {
             try {
-                Buses.borrarPorId(Integer.parseInt(jTid.getText()));
+                Buses.borrarPorId(jTid.getText());
                 JOptionPane.showMessageDialog(null, "Autobus borrado", "Valido", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-            } catch (ExcepcionPersonal e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "Tiene que ser numerico", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                this.dispose();
+            } catch (ExcepcionPersonal ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error generico", "Error", JOptionPane.ERROR_MESSAGE);
+            
+        }
         }
     }//GEN-LAST:event_jBsiguienteActionPerformed
 
@@ -136,7 +152,6 @@ public class VentBusId extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jBatrasActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
